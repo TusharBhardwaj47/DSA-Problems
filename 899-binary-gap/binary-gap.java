@@ -1,21 +1,19 @@
 class Solution {
     public int binaryGap(int n) {
-        int lastPosition = -1;
-        int maxGap = 0;
-        int position = 0;
+        n >>= Integer.numberOfTrailingZeros(n);
+        if (n == 1) return 0;
+
+        int maxGap = 0, gap = 0;
 
         while (n > 0) {
             if ((n & 1) == 1) {
-                if (lastPosition != -1) {
-                    maxGap = Math.max(maxGap, position - lastPosition);
-                }
-                lastPosition = position;
-            }
-
-            n = n >> 1;
-            position++;
+                maxGap = Math.max(maxGap, gap);
+                gap = 0;
+            } else
+                gap++;
+            n >>= 1;
         }
 
-        return maxGap;
+        return maxGap + 1;
     }
 }
